@@ -12,5 +12,5 @@ eureka:
 max:
   jwt:
     issuer: "In5pEr"
-    secretKey: "J0FagXWWKG0D1rWee4INxgypjWjEWXqM"
+    secretKey: "J0FagXWWKG0D1rWee4INxgypjWjEWXqMj33c5AZumnPsoF8QRLjxfC5bgKoK5uHqNmSffMjm2qQXMghW4ju4zrMxAx9Dlpq83HGgo05H8QEuue"
     duration: 31536000000 # 365 days in miliseconds
