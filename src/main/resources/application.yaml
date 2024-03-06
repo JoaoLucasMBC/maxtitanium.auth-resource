@@ -8,3 +8,9 @@ eureka:
     fetch-registry: true
     service-url:
       defaultZone: ${EUREKA_URI:http://localhost:8761/eureka/}
+
+max:
+  jwt:
+    issuer: "In5pEr"
+    secretKey: "J0FagXWWKG0D1rWee4INxgypjWjEWXqM"
+    duration: 31536000000 # 365 days in miliseconds
