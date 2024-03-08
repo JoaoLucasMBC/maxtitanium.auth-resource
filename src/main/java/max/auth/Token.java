@@ -7,6 +7,7 @@ import lombok.experimental.Accessors;
 @Accessors(fluent = true, chain = true)
 public record Token (
     String id,
+    String name,
     String role
 ){    
 }

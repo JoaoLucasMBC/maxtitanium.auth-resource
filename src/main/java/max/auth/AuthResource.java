@@ -35,5 +35,17 @@ public class AuthResource implements AuthController {
         return ResponseEntity.ok().body(authService.authenticate(in.email(), in.password()));
     }
 
+    @Override
+    public ResponseEntity<SolveOut> solve(SolveIn in) {
+        final Token token = authService.solve(in.token());
+        return ResponseEntity.ok(
+            SolveOut.builder()
+                .id(token.id())
+                .name(token.name())
+                .role(token.role())
+                .build()
+        );
+    }
+
         
 }
