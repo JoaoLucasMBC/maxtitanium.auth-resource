@@ -22,3 +22,10 @@ management:
       base-path: /auth/actuator
       exposure:
         include: ['*', 'prometheus']
+  
+springdoc:
+  api-docs:
+    enabled: true
+    path: /auth/v3/api-docs
+  swagger-ui:
+    path: /auth/swagger-ui
