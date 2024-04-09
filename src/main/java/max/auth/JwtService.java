@@ -14,6 +14,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;
+import max.auth.exceptions.BadJwtException;
 
 @Service
 public class JwtService {
@@ -61,11 +62,11 @@ public class JwtService {
     }
 
     private Claims resolveClaims(String token) {
-        if (token == null) throw new io.jsonwebtoken.MalformedJwtException("token is null");
+        if (token == null) throw new BadJwtException("Token can't be null");
         return validateClaims(parser.parseSignedClaims(token).getPayload());
     }
 
-    private Claims validateClaims(Claims claims) throws ExpiredJwtException {
+    private Claims validateClaims(Claims claims) {
         if (claims.getExpiration().before(new Date())) throw new ExpiredJwtException(null, claims, issuer);
         if (claims.getNotBefore().after(new Date())) throw new ExpiredJwtException(null, claims, issuer);
         return claims;
