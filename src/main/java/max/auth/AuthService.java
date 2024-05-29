@@ -15,6 +15,8 @@ import max.auth.exceptions.BadNameException;
 import max.auth.exceptions.BadPasswordException;
 import max.auth.exceptions.LoginFailedException;
 
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+
 @Service
 public class AuthService {
 
@@ -24,6 +26,7 @@ public class AuthService {
     @Autowired
     private JwtService jwtService;
 
+    @CircuitBreaker(name = "authService", fallbackMethod = "fallbackAuthRegister")
     public String register(Register in) {
 
         final String password = in.password().trim();
@@ -45,6 +48,7 @@ public class AuthService {
             
     }
 
+    @CircuitBreaker(name = "authService", fallbackMethod = "fallbackAuthLogin")
     public LoginOut authenticate(String email, String password) {
 
         try {
@@ -69,6 +73,14 @@ public class AuthService {
         } catch (FeignException e) {
             throw new LoginFailedException(email);
         }
+    }
+
+    public void fallbackAuthRegister(Register in, Throwable t) {
+        throw new RuntimeException("Failed to register account", t);
+    }
+
+    public void fallbackAuthLogin(String email, String password, Throwable t) {
+        throw new RuntimeException("Failed to authenticate", t);
     }
 
     public Token solve(String token) {
